@@ -1,2 +1,3 @@
 from custom_envs.envs.panda_tasks.My_panda_reach import My_PandaReachEnv
 from custom_envs.envs.panda_tasks.Two_panda_reach import Two_PandaReachEnv
+from custom_envs.envs.panda_tasks.My_panda_pick_and_place import My_PandaPickAndPlaceEnv

@@ -19,6 +19,13 @@ for reward_type in ["sparse", "dense"]:
         )
 
         register(
+            id="My_PandaPickAndPlace{}{}-v1".format(control_suffix, reward_suffix),
+            entry_point="custom_envs.envs:My_PandaPickAndPlaceEnv",
+            kwargs=kwargs,
+            max_episode_steps=50,
+        )
+
+        register(
             id="Two_PandaReach{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:Two_PandaReachEnv",
             kwargs=kwargs,
