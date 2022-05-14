@@ -7,7 +7,7 @@ env = gym.make('Two_PandaReach-v1')
 
 log_dir = './tensorboard/two_reach_v1/'
 
-total_timesteps = 20000
+total_timesteps = 1000000
 
 # # DDPG
 # model = DDPG(policy="MultiInputPolicy", env=env, buffer_size=100000, replay_buffer_class=HerReplayBuffer, verbose=1,

@@ -57,9 +57,15 @@ class Two_Reach(Task):
 
     def get_achieved_goal(self) -> np.ndarray:
         ee_position = np.array(self.get_ee_position())
-        return ee_position
+        if self.flag_sub_goal1 == False:
+            achieved_goal = np.concatenate((ee_position, np.array([0.0, 0.0, 0.0])))
+        else:
+            achieved_goal = np.concatenate((self.sub_goal1, ee_position))
+        return achieved_goal
 
     def reset(self) -> None:
+        self.flag_sub_goal1 = False
+        self.flag_sub_goal2 = False
         self.goal = self._sample_goal()
         self.sim.set_base_pose("target1", self.sub_goal1, np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("target2", self.sub_goal2, np.array([0.0, 0.0, 0.0, 1.0]))
@@ -69,20 +75,19 @@ class Two_Reach(Task):
         self.sub_goal1 = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
         self.sub_goal2 = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
 
-        goal = copy.deepcopy(self.sub_goal1)
+        goal = np.concatenate((self.sub_goal1, self.sub_goal2))
         # goal = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
 
         return goal
 
     def is_success(self, achieved_goal: np.ndarray, desired_goal: np.ndarray) -> Union[np.ndarray, float]:
 
-        d = distance(achieved_goal, desired_goal)
-
         if self.flag_sub_goal1 == False:
-            if d < self.distance_threshold:
+            d_sub_goal1 = distance(achieved_goal[:3], desired_goal[:3])
+            if d_sub_goal1 < self.distance_threshold:
                 self.flag_sub_goal1 = True
-                self.goal = copy.deepcopy(self.sub_goal2)
         else:
+            d = distance(achieved_goal, desired_goal)
             if d < self.distance_threshold:
                 self.flag_sub_goal2 = True
 
@@ -95,7 +100,7 @@ class Two_Reach(Task):
 
         if self.reward_type == "sparse":
             reward = 0.0
-            if d < self.distance_threshold:
+            if self.is_success(achieved_goal, desired_goal):
                 reward = 1.0
             return reward
         else:
