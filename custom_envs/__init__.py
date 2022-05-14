@@ -38,3 +38,10 @@ for reward_type in ["sparse", "dense"]:
             kwargs=kwargs,
             max_episode_steps=50,
         )
+
+        register(
+            id="Three_PandaReach{}{}-v1".format(control_suffix, reward_suffix),
+            entry_point="custom_envs.envs:Three_PandaReachEnv",
+            kwargs=kwargs,
+            max_episode_steps=50,
+        )
