@@ -90,6 +90,8 @@ class Two_Reach(Task):
             d = distance(achieved_goal, desired_goal)
             if d < self.distance_threshold:
                 self.flag_sub_goal2 = True
+            else:
+                self.flag_sub_goal2 = False
 
         return (self.flag_sub_goal1 & self.flag_sub_goal2)
         # return np.array(d < self.distance_threshold, dtype=np.float64)
