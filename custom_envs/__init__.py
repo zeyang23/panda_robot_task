@@ -45,3 +45,10 @@ for reward_type in ["sparse", "dense"]:
             kwargs=kwargs,
             max_episode_steps=50,
         )
+
+        register(
+            id="Two_PandaPush{}{}-v1".format(control_suffix, reward_suffix),
+            entry_point="custom_envs.envs:Two_PandaPushEnv",
+            kwargs=kwargs,
+            max_episode_steps=50,
+        )
