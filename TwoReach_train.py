@@ -27,8 +27,14 @@ total_timesteps = 20000
 # model.learn(total_timesteps=total_timesteps)
 # model.save("./trained/two_reach_v1/two_reach_v1_sac")
 
-# SAC
-model = SAC(policy="MultiInputPolicy", env=env, buffer_size=100000, verbose=1,
+# # SAC
+# model = SAC(policy="MultiInputPolicy", env=env, buffer_size=100000, verbose=1,
+#             tensorboard_log=log_dir)
+# model.learn(total_timesteps=total_timesteps)
+# model.save("./trained/two_reach_v1/two_reach_v1_sac")
+
+# PPO
+model = PPO(policy="MultiInputPolicy", env=env, verbose=1, normalize_advantage=True,
             tensorboard_log=log_dir)
 model.learn(total_timesteps=total_timesteps)
-model.save("./trained/two_reach_v1/two_reach_v1_sac")
+model.save("./trained/two_reach_v1/two_reach_v1_ppo")

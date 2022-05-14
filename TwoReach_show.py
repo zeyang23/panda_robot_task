@@ -1,11 +1,11 @@
 import gym
 import panda_gym
-from stable_baselines3 import SAC, HerReplayBuffer
+from stable_baselines3 import PPO
 import custom_envs
 
 env = gym.make("Two_PandaReach-v1", render=True)
 
-model = SAC.load("./trained/two_reach_v1/two_reach_v1_sac", env=env)
+model = PPO.load("./trained/two_reach_v1/two_reach_v1_ppo", env=env)
 
 obs = env.reset()
 for i in range(1000):
