@@ -6,7 +6,7 @@ from panda_gym.envs.core import Task
 from panda_gym.utils import distance
 
 
-class Two_Obj_Push(Task):
+class Three_Obj_Push(Task):
     def __init__(
             self,
             sim,
@@ -21,16 +21,22 @@ class Two_Obj_Push(Task):
         self.object_size = 0.04
 
         self.goal1_range_low = np.array([-goal_xy_range / 2, -goal_xy_range / 2, 0])
-        self.goal1_range_high = np.array([0, goal_xy_range / 2, 0])
+        self.goal1_range_high = np.array([-goal_xy_range / 6, goal_xy_range / 2, 0])
 
-        self.goal2_range_low = np.array([0, -goal_xy_range / 2, 0])
-        self.goal2_range_high = np.array([goal_xy_range / 2, goal_xy_range / 2, 0])
+        self.goal2_range_low = np.array([-goal_xy_range / 6, -goal_xy_range / 2, 0])
+        self.goal2_range_high = np.array([goal_xy_range / 6, goal_xy_range / 2, 0])
+
+        self.goal3_range_low = np.array([goal_xy_range / 6, -goal_xy_range / 2, 0])
+        self.goal3_range_high = np.array([goal_xy_range / 2, goal_xy_range / 2, 0])
 
         self.obj1_range_low = np.array([-obj_xy_range / 2, -obj_xy_range / 2, 0])
-        self.obj1_range_high = np.array([0, obj_xy_range / 2, 0])
+        self.obj1_range_high = np.array([-obj_xy_range / 6, obj_xy_range / 2, 0])
 
-        self.obj2_range_low = np.array([0, -obj_xy_range / 2, 0])
-        self.obj2_range_high = np.array([obj_xy_range / 2, obj_xy_range / 2, 0])
+        self.obj2_range_low = np.array([-obj_xy_range / 6, -obj_xy_range / 2, 0])
+        self.obj2_range_high = np.array([obj_xy_range / 6, obj_xy_range / 2, 0])
+
+        self.obj3_range_low = np.array([obj_xy_range / 6, -obj_xy_range / 2, 0])
+        self.obj3_range_high = np.array([obj_xy_range / 2, obj_xy_range / 2, 0])
 
         with self.sim.no_rendering():
             self._create_scene()
@@ -69,6 +75,21 @@ class Two_Obj_Push(Task):
             position=np.array([0.0, 0.0, self.object_size / 2]),
             rgba_color=np.array([1.0, 0.4, 0.3, 0.3]),
         )
+        self.sim.create_box(
+            body_name="object3",
+            half_extents=np.ones(3) * self.object_size / 2,
+            mass=1.0,
+            position=np.array([0.0, 0.0, self.object_size / 2]),
+            rgba_color=np.array([0.0, 0.4, 1.0, 1.0]),
+        )
+        self.sim.create_box(
+            body_name="target3",
+            half_extents=np.ones(3) * self.object_size / 2,
+            mass=0.0,
+            ghost=True,
+            position=np.array([0.0, 0.0, self.object_size / 2]),
+            rgba_color=np.array([0.0, 0.4, 1.0, 0.3]),
+        )
 
     def get_obs(self) -> np.ndarray:
         # position, rotation of the object
@@ -98,14 +119,28 @@ class Two_Obj_Push(Task):
             ]
         )
 
-        observation = np.concatenate((observation1, observation2))
+        object3_position = np.array(self.sim.get_base_position("object3"))
+        object3_rotation = np.array(self.sim.get_base_rotation("object3"))
+        object3_velocity = np.array(self.sim.get_base_velocity("object3"))
+        object3_angular_velocity = np.array(self.sim.get_base_angular_velocity("object3"))
+        observation3 = np.concatenate(
+            [
+                object3_position,
+                object3_rotation,
+                object3_velocity,
+                object3_angular_velocity,
+            ]
+        )
+
+        observation = np.concatenate((observation1, observation2, observation3))
 
         return observation
 
     def get_achieved_goal(self) -> np.ndarray:
         object1_position = np.array(self.sim.get_base_position("object1"))
         object2_position = np.array(self.sim.get_base_position("object2"))
-        achieved_goal = np.concatenate((object1_position, object2_position))
+        object3_position = np.array(self.sim.get_base_position("object3"))
+        achieved_goal = np.concatenate((object1_position, object2_position, object3_position))
         return achieved_goal
 
     def reset(self) -> None:
@@ -115,8 +150,11 @@ class Two_Obj_Push(Task):
         self.sim.set_base_pose("target1", self.goal[:3], np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("object1", object_position[:3], np.array([0.0, 0.0, 0.0, 1.0]))
 
-        self.sim.set_base_pose("target2", self.goal[3:], np.array([0.0, 0.0, 0.0, 1.0]))
-        self.sim.set_base_pose("object2", object_position[3:], np.array([0.0, 0.0, 0.0, 1.0]))
+        self.sim.set_base_pose("target2", self.goal[3:6], np.array([0.0, 0.0, 0.0, 1.0]))
+        self.sim.set_base_pose("object2", object_position[3:6], np.array([0.0, 0.0, 0.0, 1.0]))
+
+        self.sim.set_base_pose("target3", self.goal[6:], np.array([0.0, 0.0, 0.0, 1.0]))
+        self.sim.set_base_pose("object3", object_position[6:], np.array([0.0, 0.0, 0.0, 1.0]))
 
     def _sample_goal(self) -> np.ndarray:
         """Randomize goal."""
@@ -128,7 +166,11 @@ class Two_Obj_Push(Task):
         noise2 = self.np_random.uniform(self.goal2_range_low, self.goal2_range_high)
         goal2 += noise2
 
-        goal = np.concatenate((goal1, goal2))
+        goal3 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        noise3 = self.np_random.uniform(self.goal3_range_low, self.goal3_range_high)
+        goal3 += noise3
+
+        goal = np.concatenate((goal1, goal2, goal3))
 
         return goal
 
@@ -142,7 +184,11 @@ class Two_Obj_Push(Task):
         noise2 = self.np_random.uniform(self.obj2_range_low, self.obj2_range_high)
         object2_position += noise2
 
-        object_position = np.concatenate((object1_position, object2_position))
+        object3_position = np.array([0.0, 0.0, self.object_size / 2])
+        noise3 = self.np_random.uniform(self.obj3_range_low, self.obj3_range_high)
+        object3_position += noise3
+
+        object_position = np.concatenate((object1_position, object2_position, object3_position))
 
         return object_position
 
