@@ -8,12 +8,12 @@ from panda_gym.utils import distance
 
 class Three_Push(Task):
     def __init__(
-        self,
-        sim,
-        reward_type="sparse",
-        distance_threshold=0.05,
-        goal_xy_range=0.3,
-        obj_xy_range=0.3,
+            self,
+            sim,
+            reward_type="sparse",
+            distance_threshold=0.05,
+            goal_xy_range=0.3,
+            obj_xy_range=0.3,
     ) -> None:
         super().__init__(sim)
         self.reward_type = reward_type
@@ -26,6 +26,7 @@ class Three_Push(Task):
 
         self.flag_sub_goal1 = False
         self.flag_sub_goal2 = False
+        self.flag_sub_goal3 = False
 
         with self.sim.no_rendering():
             self._create_scene()
@@ -57,6 +58,14 @@ class Three_Push(Task):
             position=np.array([0.0, 0.0, self.object_size / 2]),
             rgba_color=np.array([0.1, 0.9, 0.1, 0.3]),
         )
+        self.sim.create_box(
+            body_name="target3",
+            half_extents=np.ones(3) * self.object_size / 2,
+            mass=0.0,
+            ghost=True,
+            position=np.array([0.0, 0.0, self.object_size / 2]),
+            rgba_color=np.array([0.1, 0.9, 0.1, 0.3]),
+        )
 
     def get_obs(self) -> np.ndarray:
         # position, rotation of the object
@@ -64,7 +73,7 @@ class Three_Push(Task):
         object_rotation = np.array(self.sim.get_base_rotation("object"))
         object_velocity = np.array(self.sim.get_base_velocity("object"))
         object_angular_velocity = np.array(self.sim.get_base_angular_velocity("object"))
-        observation = np.concatenate(
+        observation_object = np.concatenate(
             [
                 object_position,
                 object_rotation,
@@ -72,27 +81,35 @@ class Three_Push(Task):
                 object_angular_velocity,
             ]
         )
+
+        observation_subgoal = np.array([self.flag_sub_goal1, self.flag_sub_goal2, self.flag_sub_goal3])
+
+        observation = np.concatenate((observation_subgoal, observation_object))
+
         return observation
 
     def get_achieved_goal(self) -> np.ndarray:
         object_position = np.array(self.sim.get_base_position("object"))
 
         if self.flag_sub_goal1 == False:
-            achieved_goal = np.concatenate((object_position, np.array([0.0, 0.0, 0.0])))
+            achieved_goal = np.concatenate((object_position, np.array([0.0, 0.0, 0.0]), np.array([0.0, 0.0, 0.0])))
+        elif self.flag_sub_goal2 == False:
+            achieved_goal = np.concatenate((self.sub_goal1, object_position, np.array([0.0, 0.0, 0.0])))
         else:
-            achieved_goal = np.concatenate((self.sub_goal1, object_position))
-        return achieved_goal
+            achieved_goal = np.concatenate((self.sub_goal1, self.sub_goal2, object_position))
 
-        return object_position
+        return achieved_goal
 
     def reset(self) -> None:
         self.flag_sub_goal1 = False
         self.flag_sub_goal2 = False
+        self.flag_sub_goal3 = False
 
         self.goal = self._sample_goal()
         object_position = self._sample_object()
         self.sim.set_base_pose("target1", self.sub_goal1, np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("target2", self.sub_goal2, np.array([0.0, 0.0, 0.0, 1.0]))
+        self.sim.set_base_pose("target3", self.sub_goal3, np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("object", object_position, np.array([0.0, 0.0, 0.0, 1.0]))
 
     def _sample_goal(self) -> np.ndarray:
@@ -105,7 +122,11 @@ class Three_Push(Task):
         noise2 = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
         self.sub_goal2 += noise2
 
-        goal = np.concatenate((self.sub_goal1, self.sub_goal2))
+        self.sub_goal3 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        noise3 = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
+        self.sub_goal3 += noise3
+
+        goal = np.concatenate((self.sub_goal1, self.sub_goal2, self.sub_goal3))
 
         return goal
 
@@ -122,14 +143,18 @@ class Three_Push(Task):
             d_sub_goal1 = distance(achieved_goal[:3], desired_goal[:3])
             if d_sub_goal1 < self.distance_threshold:
                 self.flag_sub_goal1 = True
+        elif self.flag_sub_goal2 == False:
+            d_sub_goal2 = distance(achieved_goal[3:6], desired_goal[3:6])
+            if d_sub_goal2 < self.distance_threshold:
+                self.flag_sub_goal2 = True
         else:
             d = distance(achieved_goal, desired_goal)
             if d < self.distance_threshold:
-                self.flag_sub_goal2 = True
+                self.flag_sub_goal3 = True
             else:
-                self.flag_sub_goal2 = False
+                self.flag_sub_goal3 = False
 
-        return (self.flag_sub_goal1 & self.flag_sub_goal2)
+        return (self.flag_sub_goal1 & self.flag_sub_goal2 & self.flag_sub_goal3)
 
     def compute_reward(self, achieved_goal, desired_goal, info: Dict[str, Any]) -> Union[np.ndarray, float]:
 
