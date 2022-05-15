@@ -8,12 +8,12 @@ from panda_gym.utils import distance
 
 class Two_Push(Task):
     def __init__(
-        self,
-        sim,
-        reward_type="sparse",
-        distance_threshold=0.05,
-        goal_xy_range=0.3,
-        obj_xy_range=0.3,
+            self,
+            sim,
+            reward_type="sparse",
+            distance_threshold=0.05,
+            goal_xy_range=0.3,
+            obj_xy_range=0.3,
     ) -> None:
         super().__init__(sim)
         self.reward_type = reward_type
@@ -64,7 +64,7 @@ class Two_Push(Task):
         object_rotation = np.array(self.sim.get_base_rotation("object"))
         object_velocity = np.array(self.sim.get_base_velocity("object"))
         object_angular_velocity = np.array(self.sim.get_base_angular_velocity("object"))
-        observation = np.concatenate(
+        observation_object = np.concatenate(
             [
                 object_position,
                 object_rotation,
@@ -72,6 +72,11 @@ class Two_Push(Task):
                 object_angular_velocity,
             ]
         )
+
+        observation_subgoal = np.array([self.flag_sub_goal1, self.flag_sub_goal2, 0])
+
+        observation = np.concatenate((observation_subgoal, observation_object))
+
         return observation
 
     def get_achieved_goal(self) -> np.ndarray:
@@ -82,8 +87,6 @@ class Two_Push(Task):
         else:
             achieved_goal = np.concatenate((self.sub_goal1, object_position))
         return achieved_goal
-
-        return object_position
 
     def reset(self) -> None:
         self.flag_sub_goal1 = False
