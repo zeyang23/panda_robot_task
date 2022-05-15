@@ -53,4 +53,4 @@ model = PPO(policy="MultiInputPolicy", env=vec_env, verbose=1, normalize_advanta
             max_grad_norm=1, vf_coef=0.87,
             tensorboard_log=log_dir)
 model.learn(total_timesteps=total_timesteps)
-model.save("./trained/two_push_dense_v1/two_push_dense_v1_ppo_p2")
+model.save("./trained/two_push_dense_v1/two_push_dense_v1_ppo")
