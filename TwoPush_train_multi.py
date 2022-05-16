@@ -40,7 +40,6 @@ vec_env = make_vec_env(env_id, n_envs=num_cpu)
 
 log_dir = './tensorboard/two_push_dense_v1/'
 
-total_timesteps = 3000000
 
 # PPO
 # model = PPO(policy="MultiInputPolicy", env=vec_env, verbose=1, normalize_advantage=True,
@@ -52,5 +51,12 @@ model = PPO(policy="MultiInputPolicy", env=vec_env, verbose=1, normalize_advanta
             gamma=0.99, learning_rate=5e-5, ent_coef=0.0006, clip_range=0.1, n_epochs=20, gae_lambda=0.95,
             max_grad_norm=1, vf_coef=0.87,
             tensorboard_log=log_dir)
-model.learn(total_timesteps=total_timesteps)
-model.save("./trained/two_push_dense_v1/two_push_dense_v1_ppo")
+
+steps_interval = 100000
+
+models_dir = "./trained/two_push_dense_v1"
+
+for i in range(300):
+    model.learn(total_timesteps=steps_interval, reset_num_timesteps=False)
+    model.save(f"{models_dir}/PPO/{steps_interval * (i + 1)}")
+

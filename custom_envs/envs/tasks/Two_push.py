@@ -10,12 +10,16 @@ class Two_Push(Task):
     def __init__(
             self,
             sim,
+            get_ee_position,
             reward_type="sparse",
             distance_threshold=0.05,
             goal_xy_range=0.3,
             obj_xy_range=0.3,
     ) -> None:
         super().__init__(sim)
+
+        self.get_ee_position = get_ee_position
+
         self.reward_type = reward_type
         self.distance_threshold = distance_threshold
         self.object_size = 0.04
@@ -144,4 +148,13 @@ class Two_Push(Task):
                 reward = 1.0
             return reward
         else:
-            return -d
+            object_position = np.array(self.sim.get_base_position("object"))
+            ee_position = np.array(self.get_ee_position())
+
+            ee_obj_distance_threshold = 0.5
+            ee_obj_dist = distance(object_position, ee_position)
+            penalty = 0.0
+            if ee_obj_dist > ee_obj_distance_threshold:
+                penalty = ee_obj_dist
+
+            return -(d + penalty)

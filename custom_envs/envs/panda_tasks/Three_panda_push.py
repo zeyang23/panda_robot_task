@@ -23,5 +23,5 @@ class Three_PandaPushEnv(RobotTaskEnv):
     def __init__(self, render: bool = False, reward_type: str = "sparse", control_type: str = "ee") -> None:
         sim = PyBullet(render=render)
         robot = My_Panda(sim, block_gripper=True, base_position=np.array([-0.6, 0.0, 0.0]), control_type=control_type)
-        task = Three_Push(sim, reward_type=reward_type)
+        task = Three_Push(sim, reward_type=reward_type, get_ee_position=robot.get_ee_position)
         super().__init__(robot, task)
