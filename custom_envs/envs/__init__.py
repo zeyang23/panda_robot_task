@@ -10,3 +10,5 @@ from custom_envs.envs.panda_tasks.Three_panda_push import Three_PandaPushEnv
 
 from custom_envs.envs.panda_tasks.Two_obj_panda_push import Two_Obj_PandaPushEnv
 from custom_envs.envs.panda_tasks.Three_obj_panda_push import Three_Obj_PandaPushEnv
+
+from custom_envs.envs.panda_tasks.My_panda_reach_plate import My_PandaReachPlateEnv
