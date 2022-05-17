@@ -78,5 +78,5 @@ for reward_type in ["sparse", "dense"]:
             id="My_PandaReachPlate{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:My_PandaReachPlateEnv",
             kwargs=kwargs,
-            max_episode_steps=50,
+            max_episode_steps=100,
         )

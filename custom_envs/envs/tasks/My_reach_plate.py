@@ -19,8 +19,8 @@ class My_Reach_Plate(Task):
         self.distance_threshold = distance_threshold
         self.get_ee_position = get_ee_position
 
-        self.goal_range_low = np.array([-0.1, -0.1, -0.10])
-        self.goal_range_high = np.array([0.1, 0.1, 0])
+        self.goal_range_low = np.array([0.4, -0.1, -0.3])
+        self.goal_range_high = np.array([0.5, 0.1, -0.2])
 
         with self.sim.no_rendering():
             self._create_scene()
@@ -63,20 +63,23 @@ class My_Reach_Plate(Task):
         return observation
 
     def get_achieved_goal(self) -> np.ndarray:
+        ee_position = self.get_ee_position()
         object_position = np.array(self.sim.get_base_position("object"))
-        return object_position
+
+        achieved_goal = np.concatenate((ee_position, object_position))
+        return achieved_goal
 
     def reset(self):
         self.goal = self._sample_goal()
         object_position = self._sample_object()
-        self.sim.set_base_pose("target", self.goal, np.array([0.0, 0.0, 0.0, 1.0]))
+        self.sim.set_base_pose("target", self.goal[:3], np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("object", object_position, np.array([0.0, 0.0, 0.0, 1.0]))
 
     def _sample_goal(self) -> np.ndarray:
         goal = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
         noise = self.np_random.uniform(self.goal_range_low, self.goal_range_high)
         goal += noise
-        return goal
+        return np.concatenate((goal, goal))
 
     def _sample_object(self) -> np.ndarray:
         object_position = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
@@ -92,6 +95,6 @@ class My_Reach_Plate(Task):
             return -np.array(d > self.distance_threshold, dtype=np.float64)
         else:
             ee_position = self.get_ee_position()
-            penalty = distance(achieved_goal, ee_position)
+            penalty = distance(achieved_goal[3:], ee_position)
 
-            return -(d+penalty)
+            return -(d + penalty)
