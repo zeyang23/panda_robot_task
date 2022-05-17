@@ -15,8 +15,11 @@ file_name = file_place + "/custom_envs/envs/robots/panda_plate.urdf"
 pandaUid = p.loadURDF(file_name, useFixedBase=True)
 tableUid = p.loadURDF("table/table.urdf", basePosition=[0.5, 0, -0.65])
 
-targetJointsValue = p.calculateInverseKinematics(pandaUid, 6, [0.2, 0, 0.6], [0.0, 0.0, 0.0, 1.0])
-for i in range(9):
+targetJointsValue = p.calculateInverseKinematics(pandaUid, 6, [-0.05, 0.0, 0.95], [0.0, 0.0, 0.0, 1.0])
+
+print(targetJointsValue)
+
+for i in range(7):
     p.resetJointState(pandaUid, i, targetJointsValue[i], targetVelocity=0, physicsClientId=0)
 
 while True:
