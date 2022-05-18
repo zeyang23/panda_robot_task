@@ -12,15 +12,15 @@ class My_Reach_Plate(Task):
             sim,
             get_ee_position,
             reward_type="sparse",
-            distance_threshold=0.05,
+            distance_threshold=0.15,
     ) -> None:
         super().__init__(sim)
         self.reward_type = reward_type
         self.distance_threshold = distance_threshold
         self.get_ee_position = get_ee_position
 
-        self.goal_range_low = np.array([0.4, -0.1, -0.3])
-        self.goal_range_high = np.array([0.5, 0.1, -0.2])
+        self.goal_range_low = np.array([0.4, -0.0, -0.3])
+        self.goal_range_high = np.array([0.5, 0.0, -0.2])
 
         with self.sim.no_rendering():
             self._create_scene()
