@@ -21,15 +21,15 @@ class Two_Obj_Push(Task):
         self.object_size = 0.04
 
         self.goal1_range_low = np.array([-goal_xy_range / 2, -goal_xy_range / 2, 0])
-        self.goal1_range_high = np.array([0, goal_xy_range / 2, 0])
+        self.goal1_range_high = np.array([-goal_xy_range / 6, goal_xy_range / 2, 0])
 
-        self.goal2_range_low = np.array([0, -goal_xy_range / 2, 0])
+        self.goal2_range_low = np.array([goal_xy_range / 6, -goal_xy_range / 2, 0])
         self.goal2_range_high = np.array([goal_xy_range / 2, goal_xy_range / 2, 0])
 
         self.obj1_range_low = np.array([-obj_xy_range / 2, -obj_xy_range / 2, 0])
-        self.obj1_range_high = np.array([0, obj_xy_range / 2, 0])
+        self.obj1_range_high = np.array([-obj_xy_range / 6, obj_xy_range / 2, 0])
 
-        self.obj2_range_low = np.array([0, -obj_xy_range / 2, 0])
+        self.obj2_range_low = np.array([obj_xy_range / 6, -obj_xy_range / 2, 0])
         self.obj2_range_high = np.array([obj_xy_range / 2, obj_xy_range / 2, 0])
 
         with self.sim.no_rendering():
