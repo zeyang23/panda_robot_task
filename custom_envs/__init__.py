@@ -50,28 +50,28 @@ for reward_type in ["sparse", "dense"]:
             id="Two_PandaPush{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:Two_PandaPushEnv",
             kwargs=kwargs,
-            max_episode_steps=50,
+            max_episode_steps=100,
         )
 
         register(
             id="Three_PandaPush{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:Three_PandaPushEnv",
             kwargs=kwargs,
-            max_episode_steps=50,
+            max_episode_steps=150,
         )
 
         register(
             id="Two_Obj_PandaPush{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:Two_Obj_PandaPushEnv",
             kwargs=kwargs,
-            max_episode_steps=50,
+            max_episode_steps=100,
         )
 
         register(
             id="Three_Obj_PandaPush{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:Three_Obj_PandaPushEnv",
             kwargs=kwargs,
-            max_episode_steps=50,
+            max_episode_steps=150,
         )
 
         register(

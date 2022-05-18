@@ -11,9 +11,9 @@ class Two_Obj_Push(Task):
             self,
             sim,
             reward_type="sparse",
-            distance_threshold=0.05,
-            goal_xy_range=0.3,
-            obj_xy_range=0.3,
+            distance_threshold=0.1,
+            goal_xy_range=0.2,
+            obj_xy_range=0.2,
     ) -> None:
         super().__init__(sim)
         self.reward_type = reward_type
@@ -21,15 +21,15 @@ class Two_Obj_Push(Task):
         self.object_size = 0.04
 
         self.goal1_range_low = np.array([-goal_xy_range / 2, -goal_xy_range / 2, 0])
-        self.goal1_range_high = np.array([-goal_xy_range / 6, goal_xy_range / 2, 0])
+        self.goal1_range_high = np.array([-goal_xy_range / 6, -goal_xy_range / 6, 0])
 
-        self.goal2_range_low = np.array([goal_xy_range / 6, -goal_xy_range / 2, 0])
-        self.goal2_range_high = np.array([goal_xy_range / 2, goal_xy_range / 2, 0])
+        self.obj1_range_low = np.array([-goal_xy_range / 2, goal_xy_range / 6, 0])
+        self.obj1_range_high = np.array([-goal_xy_range / 6, goal_xy_range / 2, 0])
 
-        self.obj1_range_low = np.array([-obj_xy_range / 2, -obj_xy_range / 2, 0])
-        self.obj1_range_high = np.array([-obj_xy_range / 6, obj_xy_range / 2, 0])
+        self.goal2_range_low = np.array([obj_xy_range / 6, -obj_xy_range / 2, 0])
+        self.goal2_range_high = np.array([obj_xy_range / 2, -obj_xy_range / 6, 0])
 
-        self.obj2_range_low = np.array([obj_xy_range / 6, -obj_xy_range / 2, 0])
+        self.obj2_range_low = np.array([obj_xy_range / 6, obj_xy_range / 6, 0])
         self.obj2_range_high = np.array([obj_xy_range / 2, obj_xy_range / 2, 0])
 
         with self.sim.no_rendering():
