@@ -176,7 +176,7 @@ class Three_Push(Task):
             ee_obj_distance_threshold = 0.5
             ee_obj_dist = distance(object_position, ee_position)
             penalty = 0.0
-            if ee_obj_dist > ee_obj_distance_threshold:
-                penalty = ee_obj_dist
+            # if ee_obj_dist > ee_obj_distance_threshold:
+            #     penalty = ee_obj_dist
 
             return -(d + penalty)
