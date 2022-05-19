@@ -5,6 +5,8 @@ import numpy as np
 from panda_gym.envs.core import Task
 from panda_gym.utils import distance
 
+from random import choice
+
 
 class Two_Push(Task):
     def __init__(
@@ -77,7 +79,7 @@ class Two_Push(Task):
             ]
         )
 
-        observation_subgoal = np.array([self.flag_sub_goal1, self.flag_sub_goal2, 0])
+        observation_subgoal = np.array([self.flag_sub_goal1, self.flag_sub_goal2])
 
         observation = np.concatenate((observation_subgoal, observation_object))
 
@@ -96,8 +98,12 @@ class Two_Push(Task):
         self.flag_sub_goal1 = False
         self.flag_sub_goal2 = False
 
-        self.goal = self._sample_goal()
-        object_position = self._sample_object()
+        # self.goal = self._sample_goal()
+        # object_position = self._sample_object()
+
+        self.goal = self._sample_goal_simple()
+        object_position = self._sample_object_simple()
+
         self.sim.set_base_pose("target1", self.sub_goal1, np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("target2", self.sub_goal2, np.array([0.0, 0.0, 0.0, 1.0]))
         self.sim.set_base_pose("object", object_position, np.array([0.0, 0.0, 0.0, 1.0]))
@@ -120,6 +126,36 @@ class Two_Push(Task):
         """Randomize start position of object."""
         object_position = np.array([0.0, 0.0, self.object_size / 2])
         noise = self.np_random.uniform(self.obj_range_low, self.obj_range_high)
+        object_position += noise
+        return object_position
+
+    def _sample_goal_simple(self) -> np.ndarray:
+        """Randomize goal."""
+        self.sub_goal1 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        goal1_x_list = [-0.1, 0, 0.1]
+        goal1_x = choice(goal1_x_list)
+        goal1_y = 0.0
+        noise1 = np.array([goal1_x, goal1_y, 0.0])
+        self.sub_goal1 += noise1
+
+        self.sub_goal2 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        goal2_x_list = [-0.1, 0, 0.1]
+        goal2_x = choice(goal2_x_list)
+        goal2_y = 0.1
+        noise2 = np.array([goal2_x, goal2_y, 0.0])
+        self.sub_goal2 += noise2
+
+        goal = np.concatenate((self.sub_goal1, self.sub_goal2))
+
+        return goal
+
+    def _sample_object_simple(self) -> np.ndarray:
+        """Randomize start position of object."""
+        object_position = np.array([0.0, 0.0, self.object_size / 2])
+        object_x_list = [-0.1, 0, 0.1]
+        object_x = choice(object_x_list)
+        object_y = -0.1
+        noise = np.array([object_x, object_y, 0.0])
         object_position += noise
         return object_position
 

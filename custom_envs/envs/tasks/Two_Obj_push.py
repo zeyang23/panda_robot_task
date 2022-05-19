@@ -5,6 +5,8 @@ import numpy as np
 from panda_gym.envs.core import Task
 from panda_gym.utils import distance
 
+from random import choice
+
 
 class Two_Obj_Push(Task):
     def __init__(
@@ -109,6 +111,9 @@ class Two_Obj_Push(Task):
         return achieved_goal
 
     def reset(self) -> None:
+        # self.goal = self._sample_goal()
+        # object_position = self._sample_object()
+
         self.goal = self._sample_goal()
         object_position = self._sample_object()
 
@@ -140,6 +145,50 @@ class Two_Obj_Push(Task):
 
         object2_position = np.array([0.0, 0.0, self.object_size / 2])
         noise2 = self.np_random.uniform(self.obj2_range_low, self.obj2_range_high)
+        object2_position += noise2
+
+        object_position = np.concatenate((object1_position, object2_position))
+
+        return object_position
+
+    def _sample_goal_simple(self) -> np.ndarray:
+        """Randomize goal."""
+        goal1 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        goal1_x_list = [-0.16, -0.08]
+        goal1_y_list = [0.16, 0.08]
+        goal1_x = choice(goal1_x_list)
+        goal1_y = choice(goal1_y_list)
+        noise1 = np.array([goal1_x, goal1_y, 0.0])
+        goal1 += noise1
+
+        goal2 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        goal2_x_list = [0.16, 0.08]
+        goal2_y_list = [0.16, 0.08]
+        goal2_x = choice(goal2_x_list)
+        goal2_y = choice(goal2_y_list)
+        noise2 = np.array([goal1_x, goal1_y, 0.0])
+        goal2 += noise2
+
+        goal = np.concatenate((goal1, goal2))
+
+        return goal
+
+    def _sample_object_simple(self) -> np.ndarray:
+        """Randomize start position of object."""
+        object1_position = np.array([0.0, 0.0, self.object_size / 2])
+        obj1_x_list = [-0.16, -0.08]
+        obj1_y_list = [-0.16, -0.08]
+        obj1_x = choice(obj1_x_list)
+        obj1_y = choice(obj1_y_list)
+        noise1 = np.array([obj1_x, obj1_y, 0.0])
+        object1_position += noise1
+
+        object2_position = np.array([0.0, 0.0, self.object_size / 2])
+        obj2_x_list = [0.16, 0.08]
+        obj2_y_list = [-0.16, -0.08]
+        obj2_x = choice(obj2_x_list)
+        obj2_y = choice(obj2_y_list)
+        noise2 = np.array([obj2_x, obj2_y, 0.0])
         object2_position += noise2
 
         object_position = np.concatenate((object1_position, object2_position))
