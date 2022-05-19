@@ -67,7 +67,7 @@ class My_Two_Reach_Plate(Task):
         object_rotation = np.array(self.sim.get_base_rotation("object"))
         object_velocity = np.array(self.sim.get_base_velocity("object"))
         object_angular_velocity = np.array(self.sim.get_base_angular_velocity("object"))
-        observation = np.concatenate(
+        observation_object = np.concatenate(
             [
                 object_position,
                 object_rotation,
@@ -75,18 +75,20 @@ class My_Two_Reach_Plate(Task):
                 object_angular_velocity,
             ]
         )
-        ee_position = self.get_ee_position()
 
-        return np.concatenate((observation, ee_position))
+        observation_subgoal = np.array([self.flag_sub_goal1, self.flag_sub_goal2])
+
+        observation = np.concatenate((observation_subgoal, observation_object))
+
+        return observation
 
     def get_achieved_goal(self) -> np.ndarray:
-        ee_position = self.get_ee_position()
         object_position = np.array(self.sim.get_base_position("object"))
 
         if self.flag_sub_goal1 == False:
-            achieved_goal = np.concatenate((ee_position, object_position, np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])))
+            achieved_goal = np.concatenate((object_position, np.array([0.0, 0.0, 0.0])))
         else:
-            achieved_goal = np.concatenate((self.sub_goal1, self.sub_goal1, ee_position, object_position))
+            achieved_goal = np.concatenate((self.sub_goal1, object_position))
         return achieved_goal
 
     def reset(self):
@@ -106,9 +108,9 @@ class My_Two_Reach_Plate(Task):
         noise2 = self.np_random.uniform(self.goal2_range_low, self.goal2_range_high)
         self.sub_goal2 += noise2
 
-        self.sub_goal1 = self.sub_goal2 + np.array([0.0, 0.0, 0.2])
+        self.sub_goal1 = self.sub_goal2 + np.array([0.0, 0.0, 0.15])
 
-        return np.concatenate((self.sub_goal1, self.sub_goal1, self.sub_goal2, self.sub_goal2))
+        return np.concatenate((self.sub_goal1, self.sub_goal2))
 
     def _sample_object(self) -> np.ndarray:
         object_position = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
@@ -116,7 +118,8 @@ class My_Two_Reach_Plate(Task):
 
     def is_success(self, achieved_goal: np.ndarray, desired_goal: np.ndarray) -> Union[np.ndarray, float]:
         if self.flag_sub_goal1 == False:
-            d_sub_goal1 = distance(achieved_goal[:6], desired_goal[:6])
+            object_position = np.array(self.sim.get_base_position("object"))
+            d_sub_goal1 = distance(object_position, self.sub_goal1)
             if d_sub_goal1 < self.distance_threshold:
                 self.flag_sub_goal1 = True
         else:

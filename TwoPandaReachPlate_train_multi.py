@@ -42,8 +42,8 @@ vec_env = make_vec_env(env_id, n_envs=num_cpu)
 
 log_dir = './tensorboard/two_panda_reach_plate_joints_dense_v1/'
 
-checkpoint_callback = CheckpointCallback(save_freq=50000, save_path='./logs/',
-                                         name_prefix='rl_model')
+checkpoint_callback = CheckpointCallback(save_freq=25000, save_path='model_checkpoints/',
+                                         name_prefix='two_reach_plate')
 
 total_timesteps = 6000000
 

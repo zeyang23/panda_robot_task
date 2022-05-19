@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("..")
 
-from custom_envs.envs.robots.My_panda_plate import My_Panda_Plate
+from custom_envs.envs.robots.My_panda_plate_new import My_Panda_Plate_New
 from custom_envs.envs.tasks.My_two_reach_plate import My_Two_Reach_Plate
 
 from panda_gym.envs.core import RobotTaskEnv
@@ -23,6 +23,6 @@ class My_TwoPandaReachPlateEnv(RobotTaskEnv):
 
     def __init__(self, render: bool = False, reward_type: str = "sparse", control_type: str = "ee") -> None:
         sim = PyBullet(render=render)
-        robot = My_Panda_Plate(sim, base_position=np.array([-0.6, 0.0, 0.0]), control_type=control_type)
+        robot = My_Panda_Plate_New(sim, base_position=np.array([-0.6, 0.0, 0.0]), control_type=control_type)
         task = My_Two_Reach_Plate(sim, reward_type=reward_type, get_ee_position=robot.get_ee_position)
         super().__init__(robot, task)
