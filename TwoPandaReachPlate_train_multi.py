@@ -12,8 +12,9 @@ from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.env_util import make_vec_env
 
-from typing import Callable
+from stable_baselines3.common.callbacks import CheckpointCallback
 
+from typing import Callable
 
 # def make_env(env_id: str, rank: int, seed: int = 0) -> Callable:
 #     """
@@ -41,10 +42,13 @@ vec_env = make_vec_env(env_id, n_envs=num_cpu)
 
 log_dir = './tensorboard/two_panda_reach_plate_joints_dense_v1/'
 
-total_timesteps = 3500000
+checkpoint_callback = CheckpointCallback(save_freq=50000, save_path='./logs/',
+                                         name_prefix='rl_model')
+
+total_timesteps = 6000000
 
 # PPO
 model = PPO(policy="MultiInputPolicy", env=vec_env, verbose=1, normalize_advantage=True,
             tensorboard_log=log_dir)
-model.learn(total_timesteps=total_timesteps)
+model.learn(total_timesteps=total_timesteps, callback=checkpoint_callback)
 model.save("./trained/two_panda_reach_plate_joints_dense_v1/two_panda_reach_plate_joints_dense_v1_ppo")
