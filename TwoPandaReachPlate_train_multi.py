@@ -41,7 +41,7 @@ vec_env = make_vec_env(env_id, n_envs=num_cpu)
 
 log_dir = './tensorboard/two_panda_reach_plate_joints_dense_v1/'
 
-total_timesteps = 6000000
+total_timesteps = 3500000
 
 # PPO
 model = PPO(policy="MultiInputPolicy", env=vec_env, verbose=1, normalize_advantage=True,
