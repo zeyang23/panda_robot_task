@@ -85,7 +85,7 @@ for reward_type in ["sparse", "dense"]:
             id="My_TwoPandaReachPlate{}{}-v1".format(control_suffix, reward_suffix),
             entry_point="custom_envs.envs:My_TwoPandaReachPlateEnv",
             kwargs=kwargs,
-            max_episode_steps=100,
+            max_episode_steps=200,
         )
 
         register(

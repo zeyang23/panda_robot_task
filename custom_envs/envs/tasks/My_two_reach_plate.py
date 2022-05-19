@@ -98,13 +98,15 @@ class My_Two_Reach_Plate(Task):
 
     def _sample_goal(self) -> np.ndarray:
 
-        self.sub_goal1 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
-        noise1 = self.np_random.uniform(self.goal1_range_low, self.goal1_range_high)
-        self.sub_goal1 += noise1
+        # self.sub_goal1 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
+        # noise1 = self.np_random.uniform(self.goal1_range_low, self.goal1_range_high)
+        # self.sub_goal1 += noise1
 
         self.sub_goal2 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
         noise2 = self.np_random.uniform(self.goal2_range_low, self.goal2_range_high)
         self.sub_goal2 += noise2
+
+        self.sub_goal1 = self.sub_goal2 + np.array([0.0, 0.0, 0.2])
 
         return np.concatenate((self.sub_goal1, self.sub_goal1, self.sub_goal2, self.sub_goal2))
 
