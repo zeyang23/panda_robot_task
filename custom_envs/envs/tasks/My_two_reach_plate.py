@@ -5,6 +5,8 @@ import numpy as np
 from panda_gym.envs.core import Task
 from panda_gym.utils import distance
 
+from random import choice
+
 
 class My_Two_Reach_Plate(Task):
     def __init__(
@@ -12,7 +14,7 @@ class My_Two_Reach_Plate(Task):
             sim,
             get_ee_position,
             reward_type="sparse",
-            distance_threshold=0.10,
+            distance_threshold=0.1,
     ) -> None:
         super().__init__(sim)
         self.reward_type = reward_type
@@ -104,11 +106,14 @@ class My_Two_Reach_Plate(Task):
         # noise1 = self.np_random.uniform(self.goal1_range_low, self.goal1_range_high)
         # self.sub_goal1 += noise1
 
-        self.sub_goal2 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
+        self.sub_goal1 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
         noise2 = self.np_random.uniform(self.goal2_range_low, self.goal2_range_high)
-        self.sub_goal2 += noise2
+        self.sub_goal1 += noise2
 
-        self.sub_goal1 = self.sub_goal2 + np.array([0.0, 0.0, 0.15])
+        goal2_y_list = [0.15, -0.15]
+        goal2_y = choice(goal2_y_list)
+
+        self.sub_goal2 = self.sub_goal1 + np.array([0.0, goal2_y, 0.0])
 
         return np.concatenate((self.sub_goal1, self.sub_goal2))
 
