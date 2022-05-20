@@ -25,7 +25,7 @@ model = SAC(policy="MultiInputPolicy", env=env, learning_rate=1e-3, buffer_size=
             replay_buffer_kwargs=dict(n_sampled_goal=4, goal_selection_strategy='future', ), gamma=0.95, tau=0.05,
             verbose=1,
             tensorboard_log=log_dir)
-model.learn(total_timesteps=total_timesteps)
+model.learn(total_timesteps=total_timesteps, callback=checkpoint_callback)
 model.save("./trained/two_push_dense_v1/two_push_dense_v1_sac")
 
 # model = TQC(policy="MultiInputPolicy", env=env, learning_rate=1e-3, buffer_size=1000000, batch_size=2048,
