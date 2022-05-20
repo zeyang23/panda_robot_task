@@ -7,7 +7,7 @@ from stable_baselines3.common.callbacks import CheckpointCallback
 
 env = gym.make('My_TwoPandaPickAndPlaceDense-v1')
 
-log_dir = './tensorboard/two_pick_and_plate_dense_v1/'
+log_dir = './tensorboard/two_pick_and_place_dense_v1/'
 
 total_timesteps = 6000000
 
