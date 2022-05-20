@@ -2,7 +2,7 @@ import gym
 import panda_gym
 from stable_baselines3 import SAC, HerReplayBuffer
 import custom_envs
-from sb3_contrib import TQC
+# from sb3_contrib import TQC
 from stable_baselines3.common.callbacks import CheckpointCallback
 
 env = gym.make('Two_PandaPushDense-v1')
