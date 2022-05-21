@@ -60,7 +60,7 @@ class My_Two_Reach_Plate(Task):
             mass=0.0,
             ghost=True,
             position=np.zeros(3),
-            rgba_color=np.array([0.1, 0.9, 0.1, 0.3]),
+            rgba_color=np.array([1.0, 0.4, 0.3, 0.3]),
         )
 
     def get_obs(self):
