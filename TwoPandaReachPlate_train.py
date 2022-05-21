@@ -5,14 +5,14 @@ import custom_envs
 from sb3_contrib import TQC
 from stable_baselines3.common.callbacks import CheckpointCallback
 
-env = gym.make('Two_PandaPushDense-v1')
+env = gym.make('My_TwoPandaReachPlateJointsDense-v1')
 
-log_dir = './tensorboard/two_push_dense_v1/'
+log_dir = './tensorboard/two_panda_reach_plate_joints_dense_v1/'
 
 total_timesteps = 8000000
 
-checkpoint_callback = CheckpointCallback(save_freq=100000, save_path='model_checkpoints/two_push',
-                                         name_prefix='two_push')
+checkpoint_callback = CheckpointCallback(save_freq=100000, save_path='model_checkpoints/two_reach_plate',
+                                         name_prefix='two_reach_plate')
 
 model = TQC(policy="MultiInputPolicy", env=env, learning_rate=1e-3, buffer_size=1000000, batch_size=2048,
             replay_buffer_class=HerReplayBuffer, policy_kwargs=dict(net_arch=[512, 512, 512], n_critics=2),
@@ -20,4 +20,4 @@ model = TQC(policy="MultiInputPolicy", env=env, learning_rate=1e-3, buffer_size=
             verbose=1,
             tensorboard_log=log_dir)
 model.learn(total_timesteps=total_timesteps, callback=checkpoint_callback)
-model.save("./trained/two_push_dense_v1/two_push_dense_v1_tqc")
+model.save("./trained/two_reach_plate_dense_v1/two_reach_plate_dense_v1_tqc")
