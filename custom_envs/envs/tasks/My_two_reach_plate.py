@@ -24,11 +24,11 @@ class My_Two_Reach_Plate(Task):
         self.flag_sub_goal1 = False
         self.flag_sub_goal2 = False
 
-        self.goal1_range_low = np.array([0.1, -0.0, -0.2])
-        self.goal1_range_high = np.array([0.2, 0.0, -0.1])
+        self.goal1_range_low = np.array([0.2, -0.0, -0.05])
+        self.goal1_range_high = np.array([0.25, 0.0, -0.1])
 
-        self.goal2_range_low = np.array([0.4, -0.0, -0.3])
-        self.goal2_range_high = np.array([0.5, 0.0, -0.2])
+        self.goal2_range_low = np.array([0.3, -0.0, -0.1])
+        self.goal2_range_high = np.array([0.35, 0.0, -0.15])
 
         with self.sim.no_rendering():
             self._create_scene()
@@ -107,14 +107,12 @@ class My_Two_Reach_Plate(Task):
         # self.sub_goal1 += noise1
 
         self.sub_goal1 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
+        noise1 = self.np_random.uniform(self.goal1_range_low, self.goal1_range_high)
+        self.sub_goal1 += noise1
+
+        self.sub_goal2 = self.get_ee_position() + np.array([0.0, 0.0, 0.05])
         noise2 = self.np_random.uniform(self.goal2_range_low, self.goal2_range_high)
-        self.sub_goal1 += noise2
-
-        # goal2_y_list = [0.15, -0.15]
-        goal2_y_list = [-0.15]
-        goal2_y = choice(goal2_y_list)
-
-        self.sub_goal2 = self.sub_goal1 + np.array([0.0, goal2_y, 0.0])
+        self.sub_goal2 += noise2
 
         return np.concatenate((self.sub_goal1, self.sub_goal2))
 
