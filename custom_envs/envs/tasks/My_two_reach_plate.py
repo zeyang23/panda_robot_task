@@ -111,7 +111,7 @@ class My_Two_Reach_Plate(Task):
         self.sub_goal1 += noise2
 
         # goal2_y_list = [0.15, -0.15]
-        goal2_y_list = [-0.1]
+        goal2_y_list = [-0.15]
         goal2_y = choice(goal2_y_list)
 
         self.sub_goal2 = self.sub_goal1 + np.array([0.0, goal2_y, 0.0])
