@@ -15,3 +15,5 @@ from custom_envs.envs.panda_tasks.My_panda_reach_plate import My_PandaReachPlate
 from custom_envs.envs.panda_tasks.My_two_panda_reach_plate import My_TwoPandaReachPlateEnv
 
 from custom_envs.envs.panda_tasks.My_two_panda_pick_and_place import My_TwoPandaPickAndPlaceEnv
+
+from custom_envs.envs.panda_tasks.My_panda_stack import My_PandaStackEnv
