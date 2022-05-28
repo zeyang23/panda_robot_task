@@ -1,6 +1,6 @@
 from tensorboard import program
 
-tracking_address = './tensorboard/two_panda_reach_plate_joints_dense_v1'
+tracking_address = './tensorboard/My_PandaSlideDense'
 
 
 if __name__ == "__main__":
