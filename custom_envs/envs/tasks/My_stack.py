@@ -153,7 +153,7 @@ class My_Stack(Task):
 
         self.sub_goal1 += noise1
 
-        self.sub_goal2 = np.array([0.0, 0.0, 3 * self.object_size / 2])  # z offset for the cube center
+        self.sub_goal2 = np.array([0.0, 0.0, 5 * self.object_size / 2])  # z offset for the cube center
 
         self.sub_goal2 += noise1
 
