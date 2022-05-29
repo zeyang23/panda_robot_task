@@ -82,8 +82,8 @@ for reward_type in ["sparse", "dense"]:
         )
 
         register(
-            id="My_PandaStack{}{}-v1".format(control_suffix, reward_suffix),
-            entry_point="custom_envs.envs:My_PandaStackEnv",
+            id="My_PandaPushAndPick{}{}-v1".format(control_suffix, reward_suffix),
+            entry_point="custom_envs.envs:My_PandaPushAndPickEnv",
             kwargs=kwargs,
             max_episode_steps=100,
         )

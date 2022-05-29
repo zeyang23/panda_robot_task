@@ -6,7 +6,7 @@ import numpy as np
 # choose from the commands below
 
 # reach
-env = gym.make('My_PandaReach-v1', render=True)
+# env = gym.make('My_PandaReach-v1', render=True)
 # env = gym.make('Two_PandaReach-v1', render=True)
 # env = gym.make('Three_PandaReach-v1', render=True)
 #
@@ -30,8 +30,8 @@ env = gym.make('My_PandaReach-v1', render=True)
 # env.env.sim.physics_client.resetDebugVisualizerCamera(cameraDistance=0.2, cameraYaw=45,
 #                                                       cameraPitch=-45, cameraTargetPosition=[1.2, -0.50, 1.5])
 #
-# # stack
-# env = gym.make('My_PandaStack-v1', render=True)
+# # push and pick
+env = gym.make('My_PandaPushAndPick-v1', render=True)
 
 obs = env.reset()
 done = False

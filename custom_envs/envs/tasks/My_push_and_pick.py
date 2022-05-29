@@ -8,7 +8,7 @@ from panda_gym.utils import distance
 from random import choice
 
 
-class My_Stack(Task):
+class My_PushAndPick(Task):
     def __init__(
             self,
             sim,
@@ -147,15 +147,21 @@ class My_Stack(Task):
         self.sub_goal1 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
         goal1_x_list = [-0.05, 0, 0.05]
         goal1_x = choice(goal1_x_list)
-        goal1_y = 0.0
+        goal1_y = -0.05
 
         noise1 = np.array([goal1_x, goal1_y, 0.0])
-
         self.sub_goal1 += noise1
 
-        self.sub_goal2 = np.array([0.0, 0.0, 5 * self.object_size / 2])  # z offset for the cube center
+        self.sub_goal2 = np.array([0.0, 0.0, self.object_size / 2])  # z offset for the cube center
+        goal2_x_list = [-0.05, 0, 0.05]
+        goal2_x = choice(goal2_x_list)
+        goal2_y = 0.15
 
-        self.sub_goal2 += noise1
+        goal2_z_list = [3.0, 4.0, 5.0]
+        goal2_z = choice(goal2_z_list) * self.object_size / 2
+
+        noise2 = np.array([goal2_x, goal2_y, goal2_z])
+        self.sub_goal2 += noise2
 
         goal = np.concatenate((self.sub_goal1, self.sub_goal2))
 
