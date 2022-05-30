@@ -32,12 +32,12 @@ class My_Panda_Plate_New(PyBulletRobot):
         n_action = 3 if self.control_type == "ee" else 7  # control (x, y z) if "ee", else, control the 7 joints
         action_space = spaces.Box(-1.0, 1.0, shape=(n_action,), dtype=np.float32)
 
-        file_place = os.getcwd()
+        file_place = os.path.split(os.path.realpath(__file__))[0]
 
         super().__init__(
             sim,
             body_name="panda",
-            file_name=file_place + "/custom_envs/envs/robots/panda_plate.urdf",
+            file_name=file_place + "/panda_plate.urdf",
             # file_name="/home/zeyang/Data/Onedrive/文档/THU/Codes/Python/panda_robot_task/custom_envs/envs/robots/panda_plate.urdf",
             base_position=base_position,
             action_space=action_space,

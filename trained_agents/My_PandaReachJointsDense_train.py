@@ -5,13 +5,13 @@ import custom_envs
 from sb3_contrib import TQC
 from stable_baselines3.common.callbacks import CheckpointCallback
 
-env_id = 'My_PandaReachDense'
+env_id = 'My_PandaReachJointsDense'
 
 env = gym.make(env_id+'-v1')
 
 log_dir = './tensorboard/' + env_id
 
-total_timesteps = 2000000
+total_timesteps = 20000
 
 checkpoint_callback = CheckpointCallback(save_freq=100000, save_path='model_checkpoints/'+env_id,
                                          name_prefix=env_id)
