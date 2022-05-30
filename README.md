@@ -25,11 +25,11 @@ control-type: joints
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaReachJointsDense.gif)
+![image](/trained_agents/show/My_PandaReachJointsDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaReachJointsDense_TQC.jpg)
+![image](/trained_agents/show/My_PandaReachJointsDense_TQC.jpg)
 
 ## Two_PandaReachDense
 
@@ -37,11 +37,11 @@ The robot is supposed to pass two points successively.
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_PandaReachDense.gif)
+![image](/trained_agents/show/Two_PandaReachDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_PandaReachDense_PPO.jpg)
+![image](/trained_agents/show/Two_PandaReachDense_PPO.jpg)
 
 ## Three_PandaReachDense
 
@@ -49,21 +49,21 @@ The robot is supposed to pass three points successively.
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Three_PandaReachDense.gif)
+![image](/trained_agents/show/Three_PandaReachDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Three_PandaReachDense_PPO.jpg)
+![image](/trained_agents/show/Three_PandaReachDense_PPO.jpg)
 
 ## PandaPush
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPush.gif)
+![image](/trained_agents/show/PandaPush.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPush_SAC.jpg)
+![image](/trained_agents/show/PandaPush_SAC.jpg)
 
 ## Two_PandaPushDense
 
@@ -71,11 +71,11 @@ The robot is supposed to push the object to pass two points successively.
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_PandaPushDense.gif)
+![image](/trained_agents/show/Two_PandaPushDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_PandaPushDense_TQC.jpg)
+![image](/trained_agents/show/Two_PandaPushDense_TQC.jpg)
 
 ## Two_Obj_PandaPushDense
 
@@ -83,21 +83,21 @@ The robot is supposed to push two object to their targets respectively.
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_Obj_PandaPushDense.gif)
+![image](/trained_agents/show/Two_Obj_PandaPushDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/Two_Obj_PandaPushDense_SAC.jpg)
+![image](/trained_agents/show/Two_Obj_PandaPushDense_SAC.jpg)
 
 ## My_PandaSlideDense
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaSlideDense.gif)
+![image](/trained_agents/show/My_PandaSlideDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaSlideDense_TQC.jpg)
+![image](/trained_agents/show/My_PandaSlideDense_TQC.jpg)
 
 ## PandaPickAndPlace
 
@@ -107,21 +107,21 @@ This is different from the robot trained by dense rewaard.
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPickAndPlace.gif)
+![image](/trained_agents/show/PandaPickAndPlace.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPickAndPlace_SAC.jpg)
+![image](/trained_agents/show/PandaPickAndPlace_SAC.jpg)
 
 ## PandaPickAndPlaceDense
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPickAndPlaceDense.gif)
+![image](/trained_agents/show/PandaPickAndPlaceDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/PandaPickAndPlaceDense_SAC.jpg)
+![image](/trained_agents/show/PandaPickAndPlaceDense_SAC.jpg)
 
 ## My_TwoPickAndPlaceDense
 
@@ -129,11 +129,11 @@ The robot is supposed to pick the object and carry it to pass two points success
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_TwoPickAndPlaceDense.gif)
+![image](/trained_agents/show/My_TwoPickAndPlaceDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_TwoPickAndPlaceDense_TQC.jpg)
+![image](/trained_agents/show/My_TwoPickAndPlaceDense_TQC.jpg)
 
 ## My_PandaReachPlateJointsDense
 
@@ -143,11 +143,11 @@ control-type: joints
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaReachPlateJointsDense.gif)
+![image](/trained_agents/show/My_PandaReachPlateJointsDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_PandaReachPlateJointsDense_PPO.jpg)
+![image](/trained_agents/show/My_PandaReachPlateJointsDense_PPO.jpg)
 
 ## My_PandaReachPlateJointsDense
 
@@ -157,8 +157,8 @@ control-type: joints
 
 ### gif
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_TwoPandaReachPlateJointsDense.gif)
+![image](/trained_agents/show/My_TwoPandaReachPlateJointsDense.gif)
 
 ### log
 
-![image](https://github.com/zeyang23/panda_robot_task/blob/master/trained_agents/show/My_TwoPandaReachPlateJointsDense_PPO.jpg)
+![image](/trained_agents/show/My_TwoPandaReachPlateJointsDense_PPO.jpg)
