@@ -149,7 +149,7 @@ control-type: joints
 
 ![image](/trained_agents/show/My_PandaReachPlateJointsDense_PPO.jpg)
 
-## My_PandaReachPlateJointsDense
+## My_TwoPandaReachPlateJointsDense
 
 The robot is supposed to reach two points successively while balancing a ball on its plate.
 
