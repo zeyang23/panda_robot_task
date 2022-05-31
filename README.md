@@ -101,7 +101,7 @@ The robot is supposed to push two object to their targets respectively.
 
 ## PandaPickAndPlace
 
-The robot learns to push the object when it is on the table and pick the object when it is in the air.
+The robot learns to push the object when its target point is on the table and pick the object when its target point is in the air.
 
 This is different from the robot trained by dense reward.
 
