@@ -24,11 +24,11 @@ class My_Two_Reach_Plate(Task):
         self.flag_sub_goal1 = False
         self.flag_sub_goal2 = False
 
-        self.goal1_range_low = np.array([0.2, -0.0, -0.05])
-        self.goal1_range_high = np.array([0.25, 0.0, -0.1])
+        self.goal1_range_low = np.array([0.2, -0.0, -0.1])
+        self.goal1_range_high = np.array([0.25, 0.0, -0.05])
 
-        self.goal2_range_low = np.array([0.3, -0.0, -0.1])
-        self.goal2_range_high = np.array([0.35, 0.0, -0.15])
+        self.goal2_range_low = np.array([0.3, -0.0, -0.15])
+        self.goal2_range_high = np.array([0.35, 0.0, -0.1])
 
         with self.sim.no_rendering():
             self._create_scene()
